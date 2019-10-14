@@ -17,7 +17,8 @@ public class JmxBodyBuilderFactory {
         try{
             responseBodyMode = postmanItem.getRequest().getBody().getMode();
         }catch (NullPointerException e) {
-            throw e;
+            // do nothing for now - NullPointerException is expected behavior for null-bodies
+            //throw e;
         }
 
         if (responseBodyMode == null || ResponseBodyMode.EMPTY.getMode().equals(responseBodyMode)) {
