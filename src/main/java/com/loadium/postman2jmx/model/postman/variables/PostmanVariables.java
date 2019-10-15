@@ -22,4 +22,16 @@ public class PostmanVariables {
         name = "";
         variables = new ArrayList<>();
     }
+
+    public String getId() {
+        return id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public List<PostmanVariable> getVariables() {
+        return variables;
+    }
 }

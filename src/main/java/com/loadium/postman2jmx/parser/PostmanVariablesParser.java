@@ -21,8 +21,11 @@ public class PostmanVariablesParser {
 
     public Map<String, String> readVariables(String fileName) throws IOException {
         PostmanVariables jsonRepresentation = readVariablesJsonToModel(fileName);
-
-        return new HashMap<>(); // TODO
+        Map<String, String> variables = new HashMap<>();
+        jsonRepresentation.getVariables().forEach(
+                variableMapping -> variables.put(variableMapping.getKey(), variableMapping.getValue())
+        );
+        return variables;
     }
 
     private PostmanVariables readVariablesJsonToModel(String fileName) throws IOException {
