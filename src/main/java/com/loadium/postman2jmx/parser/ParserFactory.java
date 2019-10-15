@@ -11,4 +11,9 @@ public class ParserFactory {
             throw new UnsupportedOperationException();
         }
     }
+
+    public static PostmanVariablesParser getPostmanVariablesParser() {
+        // replace with more sophisticated logic later when necessary
+        return new PostmanVariablesParser();
+    }
 }
