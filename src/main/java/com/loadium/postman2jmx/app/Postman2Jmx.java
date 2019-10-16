@@ -6,6 +6,7 @@ import com.loadium.postman2jmx.model.postman.PostmanCollection;
 import com.loadium.postman2jmx.parser.IParser;
 import com.loadium.postman2jmx.parser.ParserFactory;
 import com.loadium.postman2jmx.parser.PostmanVariablesParser;
+import com.loadium.postman2jmx.parser.variables.VariablesResolver;
 import com.loadium.postman2jmx.utils.CollectionVersion;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
@@ -54,6 +55,10 @@ public class Postman2Jmx {
             // TODO: parse other files / provide means to manage different environments
 //            logger.info("Trying to parse AT environment variables from JSON file: {}", AT_VARIABLES);
 //            variables.putAll(postmanVariablesParser.readVariables(AT_VARIABLES));
+
+            // replace variable references in variable definitions with their values
+            VariablesResolver resolver = VariablesResolver.getInstance();
+            variables = resolver.resolve(variables);
 
             logger.info("Trying to build jmx file: {}", jmxOutputFile);
             JmxFileBuilder jmxFileBuilder = new JmxFileBuilder();
