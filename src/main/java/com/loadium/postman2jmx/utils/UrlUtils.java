@@ -41,8 +41,10 @@ public class UrlUtils {
     }
 
     public static boolean isVariableUrl(String url) {
-        Matcher matcher = pattern.matcher(url);
-        return matcher.find();
+        // for now just disable special treatment of URLs with variables (would lead to wrong paths in JMX)
+        return false;   // TODO replace with more sophisticated solution if needed
+//        Matcher matcher = pattern.matcher(url);
+//        return matcher.find();
     }
 
     public static String getVariableUrl(String url) {
