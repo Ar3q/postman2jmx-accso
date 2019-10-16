@@ -3,6 +3,8 @@ package com.loadium.postman2jmx.app;
 import com.loadium.postman2jmx.builder.JmxFileBuilder;
 import com.loadium.postman2jmx.exception.InvalidArgumentsException;
 import com.loadium.postman2jmx.model.postman.PostmanCollection;
+import com.loadium.postman2jmx.model.postman.PostmanItem;
+import com.loadium.postman2jmx.model.postman.PostmanUrl;
 import com.loadium.postman2jmx.parser.IParser;
 import com.loadium.postman2jmx.parser.ParserFactory;
 import com.loadium.postman2jmx.parser.PostmanVariablesParser;
@@ -57,8 +59,18 @@ public class Postman2Jmx {
 //            variables.putAll(postmanVariablesParser.readVariables(AT_VARIABLES));
 
             // replace variable references in variable definitions with their values
+            logger.info("Replace variable references in all variable values with their values...");
             VariablesResolver resolver = VariablesResolver.getInstance();
-            variables = resolver.resolve(variables);
+            variables = resolver.resolve(variables, VariablesResolver.POSTMAN_VAR_REF_PATTERN);
+
+            // replace all references in raw URLs with their values to enable correct URL decomposition
+            logger.info("Replace variables references in postman URLs with their values...");
+            for (PostmanItem item : postmanCollection.getItems()) {
+                PostmanUrl url = item.getRequest().getUrl();
+                // resolve with JMeter variable reference syntax (converter pre-converts to JMeter syntax)
+                String resolved = resolver.resolve(variables, url.getRaw(), VariablesResolver.JMETER_VAR_REF_PATTERN);
+                url.setRaw(resolved);
+            }
 
             logger.info("Trying to build jmx file: {}", jmxOutputFile);
             JmxFileBuilder jmxFileBuilder = new JmxFileBuilder();
