@@ -29,8 +29,13 @@ public class VariablesResolver {
         Matcher m = varRefPattern.matcher(varValue);
         StringBuffer sb = new StringBuffer();
         while (m.find()) {
-            // replace variable reference with its value
-            m.appendReplacement(sb, mappings.get(m.group(1)));
+            // replace variable reference with its value if there is a mapping for it
+            if(mappings.containsKey(m.group(1))) {
+                m.appendReplacement(sb, mappings.get(m.group(1)));
+            }
+            else {
+                break; // TODO use more sophisticated solution than just aborting the matching - e.g. skip the current match
+            }
         }
         m.appendTail(sb);
         return sb.toString();
