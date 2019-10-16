@@ -5,6 +5,8 @@ import org.apache.jmeter.control.gui.TestPlanGui;
 import org.apache.jmeter.testelement.TestElement;
 import org.apache.jmeter.testelement.TestPlan;
 
+import java.util.Map;
+
 public class JmxTestPlan {
 
     public static TestPlan newInstance(String name) {
@@ -18,6 +20,16 @@ public class JmxTestPlan {
         testPlan.setSerialized(false);
         testPlan.setTestPlanClasspath("");
         testPlan.setUserDefinedVariables(new Arguments());
+        return testPlan;
+    }
+
+    public static TestPlan newInstance(String name, Map<String, String> variables) {
+        TestPlan testPlan = newInstance(name);
+        Arguments args = new Arguments();
+        variables.forEach(
+                (varName, varValue) -> args.addArgument(varName, varValue)
+        );
+        testPlan.setUserDefinedVariables(args);
         return testPlan;
     }
 }

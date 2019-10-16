@@ -19,10 +19,11 @@ import org.apache.jorphan.collections.ListedHashTree;
 import java.io.*;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Map;
 
 public abstract class   AbstractJmxFileBuilder implements IJmxFileBuilder {
 
-    protected JmxFile buildJmxFile(PostmanCollection postmanCollection, String jmxOutputFilePath) throws Exception {
+    protected JmxFile buildJmxFile(PostmanCollection postmanCollection, String jmxOutputFilePath, Map<String, String> variables) throws Exception {
         if (postmanCollection == null) {
             throw new NullPostmanCollectionException();
         }
@@ -35,7 +36,7 @@ public abstract class   AbstractJmxFileBuilder implements IJmxFileBuilder {
         config.setJMeterHome();
 
         // TestPlan
-        TestPlan testPlan = JmxTestPlan.newInstance(postmanCollection.getInfo().getName());
+        TestPlan testPlan = JmxTestPlan.newInstance(postmanCollection.getInfo().getName(), variables);
 
         // ThreadGroup controller
         LoopController loopController = JmxLoopController.newInstance();
