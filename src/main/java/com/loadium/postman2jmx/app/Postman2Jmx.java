@@ -22,25 +22,34 @@ public class Postman2Jmx {
     private static Logger logger = LoggerFactory.getLogger(Postman2Jmx.class.getName());
 
     // TODO: replace with actual location of the variables JSONs / provide means for dynamic path specification
-    private static String GLOBAL_VARIABLES = ".\\input\\variables\\globals.postman_globals.json";
+    private static final String GLOBAL_VARIABLES = ".\\input\\variables\\globals.postman_globals.json";
 
-    private static String AT_VARIABLES = ".\\input\\variables\\AT.postman_environment.json";
-    private static String CI_VARIABLES = ".\\input\\variables\\CI.postman_environment.json";
-    private static String ET_VARIABLES = ".\\input\\variables\\ET.postman_environment.json";
-    private static String ET_WS_VARIABLES = ".\\input\\variables\\ET_WS.postman_environment.json";
-    private static String INT_VARIABLES = ".\\input\\variables\\INT.postman_environment.json";
-    private static String SPRINT_VARIABLES = ".\\input\\variables\\Sprint.postman_environment.json";
-    private static String LOCALHOST_VARIABLES = ".\\input\\variables\\localhost.postman_environment.json";
+    private static final String AT_VARIABLES = ".\\input\\variables\\AT.postman_environment.json";
+    private static final String CI_VARIABLES = ".\\input\\variables\\CI.postman_environment.json";
+    private static final String ET_VARIABLES = ".\\input\\variables\\ET.postman_environment.json";
+    private static final String ET_WS_VARIABLES = ".\\input\\variables\\ET_WS.postman_environment.json";
+    private static final String INT_VARIABLES = ".\\input\\variables\\INT.postman_environment.json";
+    private static final String SPRINT_VARIABLES = ".\\input\\variables\\Sprint.postman_environment.json";
+    private static final String LOCALHOST_VARIABLES = ".\\input\\variables\\localhost.postman_environment.json";
+
+    private static final String AT_ARG = "AT";
+    private static final String CI_ARG = "CI";
+    private static final String ET_ARG = "ET";
+    private static final String ET_WS_ARG = "ET_WS";
+    private static final String INT_ARG = "INT";
+    private static final String SPRINT_ARG = "SPRINT";
+    private static final String LOCALHOST_ARG = "LOCALHOST";
 
 
     public static void main(String[] args) {
         try {
-            if (args.length != 2) {
+            if (args.length != 3) {
                 throw new InvalidArgumentsException();
             }
 
             String postmanCollectionJson = args[0];
             String jmxOutputFile = args[1];
+            String environment = args[2];
 
             logger.info("Trying to parse postman collection file: {}", postmanCollectionJson);
             IParser parser = ParserFactory.getParser(CollectionVersion.V2);
@@ -52,11 +61,8 @@ public class Postman2Jmx {
             Map<String, String> variables = new HashMap<>();
             logger.info("Trying to parse global variables from JSON file: {}", GLOBAL_VARIABLES);
             variables.putAll(postmanVariablesParser.readVariables(GLOBAL_VARIABLES));
-            logger.info("Trying to parse localhost environment variables from JSON file: {}", LOCALHOST_VARIABLES);
-            variables.putAll(postmanVariablesParser.readVariables(LOCALHOST_VARIABLES));
-            // TODO: parse other files / provide means to manage different environments
-//            logger.info("Trying to parse AT environment variables from JSON file: {}", AT_VARIABLES);
-//            variables.putAll(postmanVariablesParser.readVariables(AT_VARIABLES));
+            logger.info("Trying to parse {} environment variables from JSON file: {}", environment, getEnvironmentVariablesPath(environment));
+            variables.putAll(postmanVariablesParser.readVariables(getEnvironmentVariablesPath(environment)));
 
             // replace variable references in variable definitions with their values
             logger.info("Replace variable references in all variable values with their values...");
@@ -64,7 +70,7 @@ public class Postman2Jmx {
             variables = resolver.resolve(variables, VariablesResolver.POSTMAN_VAR_REF_PATTERN);
 
             // replace all references in raw URLs with their values to enable correct URL decomposition
-            logger.info("Replace variables references in postman URLs with their values...");
+            logger.info("Replace variable references in postman URLs with their values...");
             for (PostmanItem item : postmanCollection.getItems()) {
                 PostmanUrl url = item.getRequest().getUrl();
                 // resolve with JMeter variable reference syntax (converter pre-converts to JMeter syntax)
@@ -79,6 +85,19 @@ public class Postman2Jmx {
 
         } catch (Exception e) {
             logger.error("Error occurred!", e);
+        }
+    }
+
+    private static String getEnvironmentVariablesPath(String envArg) throws InvalidArgumentsException {
+        switch (envArg) {
+            case AT_ARG: return AT_VARIABLES;
+            case CI_ARG: return CI_VARIABLES;
+            case ET_ARG: return ET_VARIABLES;
+            case ET_WS_ARG: return ET_VARIABLES;
+            case INT_ARG: return INT_VARIABLES;
+            case SPRINT_ARG: return SPRINT_VARIABLES;
+            case LOCALHOST_ARG: return LOCALHOST_VARIABLES;
+            default: throw new InvalidArgumentsException();
         }
     }
 
