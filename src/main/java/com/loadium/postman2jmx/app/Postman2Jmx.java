@@ -93,7 +93,7 @@ public class Postman2Jmx {
             case AT_ARG: return AT_VARIABLES;
             case CI_ARG: return CI_VARIABLES;
             case ET_ARG: return ET_VARIABLES;
-            case ET_WS_ARG: return ET_VARIABLES;
+            case ET_WS_ARG: return ET_WS_VARIABLES;
             case INT_ARG: return INT_VARIABLES;
             case SPRINT_ARG: return SPRINT_VARIABLES;
             case LOCALHOST_ARG: return LOCALHOST_VARIABLES;
