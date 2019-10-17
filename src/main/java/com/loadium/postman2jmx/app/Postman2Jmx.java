@@ -22,15 +22,15 @@ public class Postman2Jmx {
     private static Logger logger = LoggerFactory.getLogger(Postman2Jmx.class.getName());
 
     // TODO: replace with actual location of the variables JSONs / provide means for dynamic path specification
-    private static final String GLOBAL_VARIABLES = ".\\input\\variables\\globals.postman_globals.json";
+    private static final String GLOBAL_VARIABLES = ".\\variables\\globals.postman_globals.json";
 
-    private static final String AT_VARIABLES = ".\\input\\variables\\AT.postman_environment.json";
-    private static final String CI_VARIABLES = ".\\input\\variables\\CI.postman_environment.json";
-    private static final String ET_VARIABLES = ".\\input\\variables\\ET.postman_environment.json";
-    private static final String ET_WS_VARIABLES = ".\\input\\variables\\ET_WS.postman_environment.json";
-    private static final String INT_VARIABLES = ".\\input\\variables\\INT.postman_environment.json";
-    private static final String SPRINT_VARIABLES = ".\\input\\variables\\Sprint.postman_environment.json";
-    private static final String LOCALHOST_VARIABLES = ".\\input\\variables\\localhost.postman_environment.json";
+    private static final String AT_VARIABLES = ".\\variables\\AT.postman_environment.json";
+    private static final String CI_VARIABLES = ".\\variables\\CI.postman_environment.json";
+    private static final String ET_VARIABLES = ".\\variables\\ET.postman_environment.json";
+    private static final String ET_WS_VARIABLES = ".\\variables\\ET_WS.postman_environment.json";
+    private static final String INT_VARIABLES = ".\\variables\\INT.postman_environment.json";
+    private static final String SPRINT_VARIABLES = ".\\variables\\Sprint.postman_environment.json";
+    private static final String LOCALHOST_VARIABLES = ".\\variables\\localhost.postman_environment.json";
 
     private static final String AT_ARG = "AT";
     private static final String CI_ARG = "CI";
