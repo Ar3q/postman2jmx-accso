@@ -68,6 +68,9 @@ public abstract class   AbstractJmxFileBuilder implements IJmxFileBuilder {
         HashTree threadGroupHashTree = new ListedHashTree();
         threadGroupHashTree = testPlanHashTree.add(testPlan, threadGroup);
 
+        // Add Http Request Defaults with UTF-8 encoding to the thread group hash tree
+        threadGroupHashTree.add(JmxHTTPRequestDefaults.newInstance());
+
         // Add Http Sampler to ThreadGroup hash tree
         HashTree httpSamplerHashTree = new ListedHashTree();
 
