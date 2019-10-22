@@ -14,7 +14,8 @@ public class JmxRawBodyBuilder extends AbstractJmxBodyBuilder {
 
         HTTPSamplerProxy httpSamplerProxy = JmxHTTPSamplerProxy.newInstance(postmanItem);
 
-        if ("post".equalsIgnoreCase(httpSamplerProxy.getMethod())) {
+        String httpMethod = httpSamplerProxy.getMethod();
+        if ("post".equalsIgnoreCase(httpMethod) || "put".equalsIgnoreCase(httpMethod)) { // TODO: create body for delete method too?
             httpSamplerProxy.setPostBodyRaw(true);
             Arguments arguments = new Arguments();
             PostmanRawBody raw = postmanItem.getRequest().getBody().getRaw();
