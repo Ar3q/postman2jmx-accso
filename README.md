@@ -1,4 +1,4 @@
-# postman2jmx-accso
+# postman2jmx-with-envs
 Postman collection to Jmeter jmx file converter.
 
 Fork of [postman2jmx-accso](https://github.com/fredericjacob/postman2jmx-accso), which is fork of original [postman2jmx](https://github.com/Loadium/postman2jmx). 
@@ -15,11 +15,11 @@ postman2jmx requires Java8+ and Maven 3+.
 
 - Clone or download the project.
 ```sh
-$ git clone https://github.com/Ar3q/postman2jmx-accso.git
+$ git clone https://github.com/Ar3q/postman2jmx-with-envs
 ```
 - Build the project.
 ```sh
-$ cd postman2jmx-accso
+$ cd postman2jmx-with-envs
 $ mvn package
 ```
 
