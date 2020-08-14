@@ -3,7 +3,7 @@ Postman collection to Jmeter jmx file converter.
 
 Fork of [postman2jmx-accso](https://github.com/fredericjacob/postman2jmx-accso), which is fork of original [postman2jmx](https://github.com/Loadium/postman2jmx). 
 
-Just changed some lines in main function for passing path to JSON file with Postman environments when running jar. In postman2jmx-accso paths to envs files was hardcoded (from repo's README.md: *Adapted version from the original converter, tailored to Accso's DSO project.*)
+Just changed some lines in main function for passing path to JSON file with Postman environments when running jar. In postman2jmx-accso paths to envs files were hardcoded (from repo's README.md: *Adapted version from the original converter, tailored to Accso's DSO project.*)
 
 ### Note
 
